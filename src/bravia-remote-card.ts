@@ -572,15 +572,23 @@ class BraviaRemoteCardEditor extends LitElement {
   static properties = {
     hass: { attribute: false },
     _config: { state: true },
+    _haSelector: { state: true },
   };
 
   hass: any;
   _config!: CardConfig;
+  _haSelector = false;
 
   async connectedCallback(): Promise<void> {
     super.connectedCallback();
-    await customElements.whenDefined('ha-entity-picker');
-    this.requestUpdate();
+    if (customElements.get('ha-selector')) {
+      this._haSelector = true;
+    } else {
+      customElements.whenDefined('ha-selector').then(() => {
+        this._haSelector = true;
+        this.requestUpdate();
+      });
+    }
   }
 
   setConfig(config: CardConfig): void {
@@ -609,18 +617,31 @@ class BraviaRemoteCardEditor extends LitElement {
     );
   }
 
+  private _renderEntityField(): TemplateResult {
+    if (this._haSelector) {
+      return html`
+        <ha-selector
+          .hass=${this.hass}
+          .selector=${{ entity: { domain: 'remote' } }}
+          .value=${this._config?.entity || ''}
+          .label=${'Entity'}
+          @value-changed=${this._entityChanged}
+        ></ha-selector>
+      `;
+    }
+    return html`
+      <div class="yaml-hint">
+        <p>Configure entity in YAML:</p>
+        <code>entity: remote.your_tv</code>
+      </div>
+    `;
+  }
+
   render(): TemplateResult {
     if (!this._config) return html``;
     return html`
       <div class="editor">
-        <ha-entity-picker
-          .hass=${this.hass}
-          .value=${this._config?.entity || ''}
-          .includeDomains=${['remote']}
-          allow-custom-entity
-          label="Entity"
-          @value-changed=${this._entityChanged}
-        ></ha-entity-picker>
+        ${this._renderEntityField()}
         <label for="style">Style</label>
         <select id="style" @change=${this._styleChanged}>
           <option value="physical" ?selected=${this._config.style !== 'grid'}>
@@ -655,6 +676,20 @@ class BraviaRemoteCardEditor extends LitElement {
       font-family: inherit;
       width: 100%;
       box-sizing: border-box;
+    }
+    .yaml-hint {
+      padding: 12px;
+      border-radius: 4px;
+      background: var(--secondary-background-color, #f5f5f5);
+      color: var(--primary-text-color);
+    }
+    .yaml-hint p { margin: 0 0 8px; }
+    .yaml-hint code {
+      display: block;
+      padding: 8px;
+      border-radius: 4px;
+      background: var(--card-background-color, #fff);
+      font-size: 13px;
     }
   `;
 }
