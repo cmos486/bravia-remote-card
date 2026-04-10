@@ -1,6 +1,6 @@
 {
   "name": "Bravia Remote Card",
+  "content_type": "plugin",
   "render_readme": true,
-  "content_in_root": true,
   "filename": "bravia-remote-card.js"
 }
