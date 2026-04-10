@@ -591,8 +591,8 @@ class BraviaRemoteCardEditor extends LitElement {
     );
   }
 
-  private _entityChanged(ev: CustomEvent): void {
-    const entity = ev.detail.value;
+  private _entityInput(ev: Event): void {
+    const entity = (ev.target as HTMLInputElement).value;
     if (entity === this._config.entity) return;
     this._fire({ ...this._config, entity });
   }
@@ -607,13 +607,14 @@ class BraviaRemoteCardEditor extends LitElement {
     if (!this._config) return html``;
     return html`
       <div class="editor">
-        <ha-entity-picker
-          .hass=${this.hass}
-          .value=${this._config?.entity}
-          .includeDomains=${['remote']}
-          allow-custom-entity
-          @value-changed=${this._entityChanged}
-        ></ha-entity-picker>
+        <label for="entity">Entity</label>
+        <input
+          id="entity"
+          type="text"
+          placeholder="remote.kd_65xh9096"
+          .value=${this._config?.entity || ''}
+          @input=${this._entityInput}
+        />
         <label for="style">Style</label>
         <select id="style" @change=${this._styleChanged}>
           <option value="physical" ?selected=${this._config.style !== 'grid'}>
@@ -638,7 +639,7 @@ class BraviaRemoteCardEditor extends LitElement {
       font-weight: 500;
       color: var(--primary-text-color);
     }
-    select {
+    input, select {
       padding: 10px;
       border-radius: 4px;
       border: 1px solid var(--divider-color, #ccc);
@@ -646,6 +647,8 @@ class BraviaRemoteCardEditor extends LitElement {
       color: var(--primary-text-color);
       font-size: 14px;
       font-family: inherit;
+      width: 100%;
+      box-sizing: border-box;
     }
   `;
 }
