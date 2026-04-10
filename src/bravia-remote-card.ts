@@ -604,17 +604,15 @@ class BraviaRemoteCardEditor extends LitElement {
   }
 
   render(): TemplateResult {
-    if (!this.hass || !this._config) return html``;
+    if (!this._config) return html``;
     return html`
       <div class="editor">
-        <label for="entity">Entity</label>
         <ha-entity-picker
-          id="entity"
           .hass=${this.hass}
-          .value=${this._config.entity || ''}
+          .value=${this._config?.entity}
           .includeDomains=${['remote']}
-          @value-changed=${this._entityChanged}
           allow-custom-entity
+          @value-changed=${this._entityChanged}
         ></ha-entity-picker>
         <label for="style">Style</label>
         <select id="style" @change=${this._styleChanged}>

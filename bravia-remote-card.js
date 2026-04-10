@@ -396,16 +396,14 @@ const t=globalThis,e=t.ShadowRoot&&(void 0===t.ShadyCSS||t.ShadyCSS.nativeShadow
     .g-clr-yellow ha-icon { color: #333; }
     .g-clr-blue   { background: #2196f3; color: #fff; }
     .g-clr-blue ha-icon   { color: #fff; }
-  `;class dt extends nt{setConfig(t){this._config=t}_fire(t){this.dispatchEvent(new CustomEvent("config-changed",{detail:{config:t},bubbles:!0,composed:!0}))}_entityChanged(t){const e=t.detail.value;e!==this._config.entity&&this._fire({...this._config,entity:e})}_styleChanged(t){const e=t.target.value;e!==this._config.style&&this._fire({...this._config,style:e})}render(){return this.hass&&this._config?B`
+  `;class dt extends nt{setConfig(t){this._config=t}_fire(t){this.dispatchEvent(new CustomEvent("config-changed",{detail:{config:t},bubbles:!0,composed:!0}))}_entityChanged(t){const e=t.detail.value;e!==this._config.entity&&this._fire({...this._config,entity:e})}_styleChanged(t){const e=t.target.value;e!==this._config.style&&this._fire({...this._config,style:e})}render(){return this._config?B`
       <div class="editor">
-        <label for="entity">Entity</label>
         <ha-entity-picker
-          id="entity"
           .hass=${this.hass}
-          .value=${this._config.entity||""}
+          .value=${this._config?.entity}
           .includeDomains=${["remote"]}
-          @value-changed=${this._entityChanged}
           allow-custom-entity
+          @value-changed=${this._entityChanged}
         ></ha-entity-picker>
         <label for="style">Style</label>
         <select id="style" @change=${this._styleChanged}>
