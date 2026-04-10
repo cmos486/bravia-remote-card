@@ -1,8 +1,21 @@
 # Bravia Remote Card
 
+[![HACS Badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
+[![HA Version](https://img.shields.io/badge/Home%20Assistant-2024.1%2B-blue.svg)](https://www.home-assistant.io/)
+[![GitHub Release](https://img.shields.io/github/v/release/cmos486/bravia-remote-card)](https://github.com/cmos486/bravia-remote-card/releases)
+
 Custom Home Assistant Lovelace card that replicates the **Sony RMF-TX500E** remote control.
 
-Two visual styles available: a realistic physical remote replica and a modern grid layout.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/cmos486/bravia-remote-card/main/images/preview.png" alt="Bravia Remote Card" width="280">
+</p>
+
+## Prerequisites
+
+> **This card requires the [Bravia REST API](https://github.com/cmos486/Bravia-REST-API) integration.**
+>
+> Without it, the card will not have a `remote.*` entity to send commands to.
+> Install and configure [Bravia REST API](https://github.com/cmos486/Bravia-REST-API) first, then install this card.
 
 ## Installation
 
@@ -26,16 +39,16 @@ Two visual styles available: a realistic physical remote replica and a modern gr
 
 ```yaml
 type: custom:bravia-remote-card
-entity: remote.kd_65xh9096
-style: physical
+entity: remote.kd_65xh9096  # Your remote entity from Bravia REST API
+style: physical              # or "grid"
 ```
 
 ### Options
 
-| Option   | Type   | Default    | Description                              |
-|----------|--------|------------|------------------------------------------|
-| `entity` | string | *required* | Entity ID of your Sony Bravia remote     |
-| `style`  | string | `physical` | Card style: `physical` or `grid`         |
+| Option   | Type   | Default    | Description                                          |
+|----------|--------|------------|------------------------------------------------------|
+| `entity` | string | *required* | Entity ID of your Bravia REST API remote entity      |
+| `style`  | string | `physical` | Card style: `physical` or `grid`                     |
 
 ## Styles
 
@@ -45,7 +58,7 @@ Faithful replica of the Sony RMF-TX500E with realistic button layout, dark theme
 
 ```yaml
 type: custom:bravia-remote-card
-entity: remote.sony_bravia
+entity: remote.kd_65xh9096
 style: physical
 ```
 
@@ -55,13 +68,13 @@ Modern flat design with MDI icons, themed to match your Home Assistant dashboard
 
 ```yaml
 type: custom:bravia-remote-card
-entity: remote.sony_bravia
+entity: remote.kd_65xh9096
 style: grid
 ```
 
 ## Button Mapping
 
-All buttons use `remote.send_command` with standard IRCC command names:
+All buttons use `remote.send_command` with standard IRCC command names from the [Bravia REST API](https://github.com/cmos486/Bravia-REST-API):
 
 | Button       | Command       |
 |--------------|---------------|
@@ -80,17 +93,16 @@ All buttons use `remote.send_command` with standard IRCC command names:
 | Rewind / FF  | `Rewind` / `Forward` |
 | Stop         | `Stop`        |
 
-## Requirements
-
-- Home Assistant with the **Sony Bravia** integration configured
-- A `remote.*` entity from the Bravia integration
-
 ## Notes
 
 - Commands use the IRCC protocol via `remote.send_command`
 - Some app buttons (YouTube, Prime, Disney+) may not be available on all TV models
 - Available commands depend on your specific TV model — check the `available_commands` attribute on your remote entity
 - The card includes a visual editor accessible from the HA card configuration UI
+
+## Related
+
+- **[Bravia REST API](https://github.com/cmos486/Bravia-REST-API)** — Home Assistant integration for Sony Bravia TVs (required)
 
 ## License
 

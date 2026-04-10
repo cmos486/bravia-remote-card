@@ -705,6 +705,7 @@ customElements.define('bravia-remote-card-editor', BraviaRemoteCardEditor);
 (window as any).customCards.push({
   type: 'bravia-remote-card',
   name: 'Bravia Remote Card',
-  description: 'Sony Bravia TV remote control card for Home Assistant',
+  description: 'Sony Bravia TV remote control card for Home Assistant — designed for Bravia REST API integration',
   preview: true,
+  documentationURL: 'https://github.com/cmos486/bravia-remote-card',
 });
