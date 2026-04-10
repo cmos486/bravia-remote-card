@@ -99,7 +99,7 @@ class BraviaRemoteCard extends LitElement {
   }
 
   static getStubConfig(): object {
-    return { entity: '', style: 'physical' };
+    return { entity: 'remote.bravia', style: 'physical' };
   }
 
   setConfig(config: CardConfig): void {

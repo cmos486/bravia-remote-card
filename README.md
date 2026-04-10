@@ -6,9 +6,7 @@
 
 Custom Home Assistant Lovelace card that replicates the **Sony RMF-TX500E** remote control.
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/cmos486/bravia-remote-card/main/images/preview.png" alt="Bravia Remote Card" width="280">
-</p>
+![Bravia Remote Card](https://raw.githubusercontent.com/cmos486/bravia-remote-card/main/images/preview.png)
 
 ## Prerequisites
 
